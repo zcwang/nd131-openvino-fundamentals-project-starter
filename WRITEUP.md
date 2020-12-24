@@ -24,7 +24,7 @@ root@5efb74f6c3a1:/home/workspace/public/mobilenet-ssd#
 python main.py -i resources/Pedestrian_Detect_2_1_1.mp4 -m /home/workspace/public/mobilenet-ssd/./mobilenet-ssd.xml -l /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libcpu_extension_sse4.so -d CPU -pt 0.6 | ffmpeg -v warning -f rawvideo -pixel_format bgr24 -video_size 768x432 -framerate 24 -i - http://0.0.0.0:3004/fac.ffm
 
 5. Please refer the test result below,
-https://r953259c960231xjupyterlcm2lsxnf.udacity-student-workspaces.com/lab/tree/Project_Result-Gary1224.jpg (Project_Result-Gary1224.jpg)
+https://raw.githubusercontent.com/zcwang/nd131-openvino-fundamentals-project-starter/master/Project_Result-Gary1224.jpg (Project_Result-Gary1224.jpg)
 
 ## Comparing Model Performance
 
