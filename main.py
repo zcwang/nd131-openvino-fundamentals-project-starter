@@ -54,7 +54,7 @@ def build_argparser():
                         help="Path to an xml file with a trained model.")
     parser.add_argument("-i", "--input", required=True, type=str,
                         help="Path to image or video file")
-    parser.add_argument("-l", "--cpu_extension", required=False, type=str,
+    parser.add_argument("-lastCount", "--cpu_extension", required=False, type=str,
                         default=None,
                         help="MKLDNN (CPU)-targeted custom layers."
                              "Absolute path to a shared library with the"
@@ -88,12 +88,12 @@ def infer_on_stream(args, client):
     :return: None
     """
     # initiate variables
-    dt = 0 # detected
-    l = 0 # last counted
-    t = 0 # total
-    s = 0 # start time  
+    detectedPerson = 0 # detected
+    lastCount = 0 # last counted
+    totalPerson = 0 # total
+    startTime = 0 # start time  
     request_id = 0 
-    dq = deque(maxlen=30)
+    detectedQueue = deque(maxlen=30)
     
     # Initialise the class
     infer_network = Network()
@@ -111,7 +111,7 @@ def infer_on_stream(args, client):
         input_stream = args.input
     else:
         input_stream = args.input
-        assert os.path.isfile(args.input), "Specified input file doesn't exist"
+        assert os.path.isfile(args.input), "Specified input file doesn'totalPerson exist"
 
     cap = cv2.VideoCapture(input_stream)
     if input_stream:
@@ -168,27 +168,27 @@ def infer_on_stream(args, client):
             ### Topic "person": keys of "count" and "total" 
             ### Topic "person/duration": key of "duration"
 
-            dq.append(count)
-            dt=0
+            detectedQueue.append(count)
+            detectedPerson=0
 
             # proportion of frames with a positive detection 
-            if np.sum(dq)/30 > 0.1:
-                dt = 1
+            if np.sum(detectedQueue)/30 > 0.1:
+                detectedPerson = 1
 
             # Person is counted
-            if dt > l:
-                s = time.time()
-                t = t + dt - l
-                client.publish("person", json.dumps({"total": t}))
+            if detectedPerson > lastCount:
+                startTime = time.time()
+                totalPerson = totalPerson + detectedPerson - lastCount
+                client.publish("person", json.dumps({"total": totalPerson}))
 
             # Person duration in the video is calculated
-            if dt < l:
-                d = int(time.time() - s)
+            if detectedPerson < lastCount:
+                d = int(time.time() - startTime)
                 # Publish messages to the MQTT server
                 client.publish("person/duration",json.dumps({"duration": d}))
 
             client.publish("person", json.dumps({"count": count}))
-            l = dt
+            lastCount = detectedPerson
 
         wait_key = cv2.waitKey(60)
         if wait_key == 27:
@@ -222,7 +222,6 @@ def main():
     client = connect_mqtt()
     # Perform inference on the input stream
     infer_on_stream(args, client)
-
 
 if __name__ == '__main__':
     main()
