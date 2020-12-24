@@ -7,7 +7,7 @@ Use a useful person detection model (https://docs.openvinotoolkit.org/latest/omz
 1. Download model 
 /opt/intel/openvino/deployment_tools/open_model_zoo/tools/downloader/downloader.py --name \*ssd\* -o .
 
-2. To use mo.py to convert mobilenet_ssd model to IR xml/bin format types as following,
+2. To use mo.py to convert mobilenet_ssd model to IR xml/bin format types (in folder /home/workspace/public/mobilenet-ssd) as following,
 
 root@5efb74f6c3a1:/home/workspace/public/mobilenet-ssd# ls -lt
 total 45376
