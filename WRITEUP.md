@@ -24,13 +24,13 @@ https://raw.githubusercontent.com/zcwang/nd131-openvino-fundamentals-project-sta
 ## Comparing Model Performance
 
 My method(s) to compare models before and after conversion to Intermediate Representations
-were...
 
-The difference between model accuracy pre- and post-conversion was...
+The accuracy is almost the same among Caffee/IR-with-FP32/IR-with-FP16, but faster in its inference time,
+- pre-conversion in Caffee format: 23MB
 
-The size of the model pre- and post-conversion was...
+- post-conversion, FP32 (before optimizer): 23MB size of model, 40~ FPS
 
-The inference time of the model pre- and post-conversion was...
+- post-conversion FP16 (best optimizer): 23MB size of model, 51~ FPS
 
 ## Assess Model Use Cases
 
