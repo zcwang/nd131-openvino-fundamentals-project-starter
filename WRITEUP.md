@@ -28,9 +28,9 @@ My method(s) to compare models before and after conversion to Intermediate Repre
 The accuracy is almost the same among Caffee/IR-with-FP32/IR-with-FP16, but faster in its inference time,
 - pre-conversion in Caffee format: 23MB
 
-- post-conversion, FP32 (before optimizer): 23MB size of model, 40~ FPS
+- post-conversion, FP32 (before optimizer): 23MB size of model, 37~40 FPS
 
-- post-conversion FP16 (best optimizer): 23MB size of model, 51~ FPS
+- post-conversion FP16 (best optimizer): 23MB size of model, 40~ FPS
 
 ## Assess Model Use Cases
 
